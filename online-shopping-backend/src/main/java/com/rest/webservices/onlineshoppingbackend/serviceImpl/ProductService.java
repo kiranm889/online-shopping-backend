@@ -51,6 +51,7 @@ public class ProductService {
 				products.remove(productToRemove.get());
 			}
 		}
+		productRepository.deleteById(id);
 	}
 
 //	public int getQuantityForProduct(String productName) {

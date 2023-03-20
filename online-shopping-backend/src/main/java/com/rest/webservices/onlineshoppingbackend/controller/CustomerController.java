@@ -52,8 +52,7 @@ public class CustomerController {
 
 	@GetMapping("/{customerName}/forgot")
 	public ResponseEntity<?> forgotPassword(@PathVariable String customerName) {
-		Customer customer = new Customer(null, customerName, customerName, customerName, customerName, customerName,
-				customerName);// customerService.getCustomerByName(customerName);
+		Customer customer = customerService.getCustomerByName(customerName);
 		if (customer == null) {
 			return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
 		}

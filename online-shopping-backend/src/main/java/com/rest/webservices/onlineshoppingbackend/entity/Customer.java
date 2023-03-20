@@ -51,8 +51,6 @@ public class Customer {
 	@Column(name = "contact_number")
 	private String contactNumber;
 
-	@Column(name = "quantity")
-	private int quantity;
 
 	public Long getId() {
 		return id;
