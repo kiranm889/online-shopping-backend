@@ -96,38 +96,4 @@ public class CustomerController {
 		return new ResponseEntity<>("Product deleted successfully", HttpStatus.OK);
 	}
 
-	// forgotPassword
-	@PostMapping("/forgot-password")
-	public ResponseEntity<?> forgotPassword(@RequestParam String loginId, @RequestParam String email) {
-		Customer customer = customerService.getCustomerByLoginIdAndEmail(loginId, email);
-		if (customer == null) {
-			return new ResponseEntity<>("Invalid loginId or email", HttpStatus.NOT_FOUND);
-		}
-		// Generate a new password and send it to the customer's email
-		String newPassword = generateNewPassword();
-		customer.setPassword(newPassword);
-		customerService.updateCustomer(loginId, customer);
-
-		// Send email with the new password
-		String emailBody = "Your new password is: " + newPassword;
-		sendEmail(customer.getEmail(), "Password reset", emailBody);
-
-		return new ResponseEntity<>("Password reset successful. Check your email for the new password.", HttpStatus.OK);
-	}
-
-	private String generateNewPassword() {
-		// Generate a random string of characters
-		// This is just an example, you can use a more secure method to generate
-		// passwords
-		int length = 8;
-		String allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=";
-		Random random = new Random();
-		return random.ints(length, 0, allowedChars.length()).mapToObj(allowedChars::charAt).map(Object::toString)
-				.collect(Collectors.joining());
-	}
-
-	private void sendEmail(String to, String subject, String body) {
-		// Code to send email using a third-party service or SMTP
-	}
-
 }
